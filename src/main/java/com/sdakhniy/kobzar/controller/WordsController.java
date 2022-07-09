@@ -1,6 +1,7 @@
 package com.sdakhniy.kobzar.controller;
 
 import com.sdakhniy.kobzar.dao.WorldsDao;
+import com.sdakhniy.kobzar.dto.IndexedLetter;
 import com.sdakhniy.kobzar.dto.WordsResponse;
 import com.sdakhniy.kobzar.model.tables.records.WordsRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,9 +34,10 @@ public class WordsController {
         );
     }
 
-    private Map<String, Integer> parseRequestParam(List<String> requestParam) {
+    private List<IndexedLetter> parseRequestParam(List<String> requestParam) {
         return requestParam.stream().map(p -> p.split(":"))
-                .collect(Collectors.toMap(p -> p[0], p -> Integer.parseInt(p[1])));
+                .map(tokens -> new IndexedLetter(tokens[0], Integer.parseInt(tokens[1])))
+                .collect(Collectors.toList());
     }
 
     private List<String> toLowerCase(List<String> letters) {

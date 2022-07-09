@@ -1,5 +1,6 @@
 package com.sdakhniy.kobzar.dao;
 
+import com.sdakhniy.kobzar.dto.IndexedLetter;
 import com.sdakhniy.kobzar.model.Tables;
 import com.sdakhniy.kobzar.model.tables.records.WordsRecord;
 import org.jooq.Condition;
@@ -17,19 +18,19 @@ public class WorldsDao {
     @Autowired
     private DefaultCloseableDSLContext dslContext;
 
-    public List<WordsRecord> getWords(List<String> exclude, Map<String, Integer> includeWrongPosition, Map<String, Integer> includeOnPosition) {
+    public List<WordsRecord> getWords(List<String> exclude, List<IndexedLetter> includeWrongPosition, List<IndexedLetter> includeOnPosition) {
         return dslContext.selectFrom(Tables.WORDS)
                 .where(
-                        Tables.WORDS.LETTERS.contains(includeWrongPosition.keySet().toArray(new String[]{})),
+                        Tables.WORDS.LETTERS.contains(includeWrongPosition.stream().map(IndexedLetter::letter).toArray(String[]::new)),
                         DSL.not(DSL.condition("{0} && {1}", Tables.WORDS.LETTERS, DSL.val(exclude.toArray(String[]::new)))),
                         DSL.and(
-                                includeOnPosition.entrySet().stream()
-                                        .map(entry -> DSL.arrayGet(Tables.WORDS.LETTERS, entry.getValue()).eq(entry.getKey()))
+                                includeOnPosition.stream()
+                                        .map(entry -> DSL.arrayGet(Tables.WORDS.LETTERS, entry.index()).eq(entry.letter()))
                                         .toArray(Condition[]::new)),
                         DSL.and(
-                                includeWrongPosition.entrySet().stream()
-                                        .map(entry -> DSL.arrayGet(Tables.WORDS.LETTERS, entry.getValue()).ne(entry.getKey()))
-                                        .toArray(Condition[]::new))).orderBy(Tables.WORDS.RANK.desc())
+                                includeWrongPosition.stream()
+                                        .map(entry -> DSL.arrayGet(Tables.WORDS.LETTERS, entry.index()).ne(entry.letter()))
+                                        .toArray(Condition[]::new))).orderBy(Tables.WORDS.UNIQUE_NUMBER.desc(), Tables.WORDS.RANK.desc())
                 .fetch().stream().toList();
     }
 }
