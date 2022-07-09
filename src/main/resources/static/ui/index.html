@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+    <link type="text/css" rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .app-container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 10px;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .letter-input {
+            font-size: 40px;
+            background-color: #3da35d;
+            text-transform: uppercase;
+        }
+        .disposed-letter-input {
+            font-size: 25px;
+            background-color: #cca300;
+        }
+        .letter-input, .disposed-letter-input {
+            text-align: center;
+            width: 25%;
+            color: white;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border-style: solid;
+            border-color: black;
+            border-width: 1px;
+            margin: 2px;
+            font-weight: 600;
+        }
+        body {
+            background-color: #372442;
+            font-family: avenir next,avenir,sans-serif;
+        }
+        .list {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: center;
+            color: white;
+            font-size: 20px !important;
+        }
+        .simple-keyboard {
+            background-color: #372442;
+            border-radius: 5px;
+            border-width: 2px;
+            border-color: black;
+            border-style: solid;
+            color: white;
+            text-transform: uppercase;
+        }
+        .hg-button {
+            background-color: #372442;
+            border-color: white !important;
+            border-style: solid !important;
+            border-width: 1px;
+            font-weight: 400;
+        }
+        .ui.header.app-header {
+            color: white;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <div id="connect-container" class="app-container">
+        <div class="row">
+            <h1 class="ui header app-header">КОБЗАР</h1>
+        </div>
+        <div class="row">
+            <input type="text" class="letter-input" name="letter1" x-index="1" maxlength="1">
+            <input type="text" class="letter-input" name="letter2" x-index="2" maxlength="1">
+            <input type="text" class="letter-input" name="letter3" x-index="3" maxlength="1">
+            <input type="text" class="letter-input" name="letter4" x-index="4" maxlength="1">
+            <input type="text" class="letter-input" name="letter5" x-index="5" maxlength="1">
+        </div>
+        <div class="row">
+            <input type="text" class="disposed-letter-input" name="disposed-letter1" x-index="1" maxlength="5">
+            <input type="text" class="disposed-letter-input" name="disposed-letter2" x-index="2" maxlength="5">
+            <input type="text" class="disposed-letter-input" name="disposed-letter3" x-index="3" maxlength="5">
+            <input type="text" class="disposed-letter-input" name="disposed-letter4" x-index="4" maxlength="5">
+            <input type="text" class="disposed-letter-input" name="disposed-letter5" x-index="5" maxlength="5">
+        </div>
+        <div class="row">
+            <div class="simple-keyboard"></div>
+        </div>
+        <div class="row">
+            <button id="submit-button" class="ui button">Шукати</button>
+        </div>
+
+        <div id="worlds-list" class="ui middle aligned divided list">
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+<script type="text/javascript" src="./app.js"></script>
+</body>
+</html>
