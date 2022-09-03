@@ -74,7 +74,7 @@
         .row.info-text {
             color: white;
             font-size: 15px;
-            display:none;
+            display: none;
         }
         .info-text p {
             margin: auto;
@@ -83,6 +83,13 @@
         }
         .info-button.pressed {
             color: #cca300;
+        }
+        .clear-button {
+            align-self: center;
+            position: absolute;
+            right: 20px;
+            font-size: 30px;
+            color: white;
         }
 
         @media only screen
@@ -116,6 +123,10 @@
             .row.info-text {
                 font-size: 30px;
             }
+            .clear-button {
+                right: 30px;
+                font-size: 60px;
+            }
         }
     </style>
 </head>
@@ -124,6 +135,7 @@
     <div id="connect-container" class="app-container">
         <div class="row">
             <h1 class="ui header app-header">КОБЗАР <i class="fa-regular fa-circle-question info-button"></i></h1>
+            <i class="fa-regular fa-rectangle-xmark clear-button"></i>
         </div>
         <div class="row info-text">
              <p>- Введіть в зелені поля літери, що стоять на своєму місці.</p>

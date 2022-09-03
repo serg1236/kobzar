@@ -57,6 +57,7 @@ function refreshUI() {
          var newVal = $(".disposed-letter-input[x-index="+item.index+"]").val() + item.value;
          $(".disposed-letter-input[x-index="+item.index+"]").val(newVal);
     });
+    $("#worlds-list").html("");
 }
 
 $(function() {
@@ -108,13 +109,16 @@ $(function() {
         $.get("/words", params, function( response ) {
             $("#worlds-list").html("");
             var size = response.words.length > 20 ? 20 : response.words.length;
+            if(size == 0) {
+                 $("#worlds-list").html("<div class='item'><i>Нічого не знайдено</i></div>");
+            }
             for(var i = 0; i < size; i++) {
                 $("#worlds-list").append("<div class='item'>"+ response.words[i] +"</div>");
             }
             if(response.words.length > size) {
                 $("#worlds-list").append("<div class='item'>...</div>");
             }
-        }).fail(() => $("#worlds-list").html("<div class='item'>Помилка сервера</div>"));
+        }).fail(() => $("#worlds-list").html("<div class='item'><i>Помилка сервера</i></div>"));
     });
 
     $(".info-button").click(event => {
@@ -127,5 +131,12 @@ $(function() {
             $(target).addClass("pressed");
             $(".info-text").css("display", "block");
         }
+    });
+
+    $(".clear-button").click(event => {
+        includeOnPosition = [];
+        includeWrongPosition = [];
+        exclude = [];
+        refreshUI();
     })
 });
