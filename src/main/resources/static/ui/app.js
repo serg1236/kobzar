@@ -61,7 +61,7 @@ function refreshUI() {
 
 $(function() {
     refreshUI();
-    $(".letter-input").on('input', (event) => {
+    $(".letter-input").on('change', (event) => {
         var value = event.originalEvent.data;
         var target = event.target;
         var index =  $(target).attr("x-index");
@@ -77,7 +77,7 @@ $(function() {
 
         refreshUI();
     });
-    $(".disposed-letter-input").on('input', (event) => {
+    $(".disposed-letter-input").on('change', (event) => {
         var target = event.target;
         var index =  $(target).attr("x-index");
         includeWrongPosition = includeWrongPosition.filter(item => {
