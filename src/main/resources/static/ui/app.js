@@ -80,6 +80,7 @@ $(function() {
     });
     $(".disposed-letter-input").on('input', (event) => {
         var target = event.target;
+        alert("triggered");
         var index =  $(target).attr("x-index");
         includeWrongPosition = includeWrongPosition.filter(item => {
             return item.index != index;
