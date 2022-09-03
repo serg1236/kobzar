@@ -114,4 +114,16 @@ $(function() {
             }
         }).fail(() => $("#worlds-list").html("<div class='item'>Помилка сервера</div>"));
     });
+
+    $(".info-button").click(event => {
+        var target = event.target;
+        var pressed = $(target).hasClass("pressed");
+        if(pressed) {
+            $(target).removeClass("pressed");
+            $(".info-text").css("display", "none");
+        } else {
+            $(target).addClass("pressed");
+            $(".info-text").css("display", "block");
+        }
+    })
 });
