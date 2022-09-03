@@ -63,6 +63,7 @@ $(function() {
     refreshUI();
     $(".letter-input").on('input', (event) => {
         var value = event.originalEvent.data;
+        alert("triggered with val " + value);
         var target = event.target;
         var index =  $(target).attr("x-index");
         var positionedValue = { value: value, index: index}
