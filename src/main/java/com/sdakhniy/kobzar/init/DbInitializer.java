@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Component
 public class DbInitializer {
@@ -63,30 +63,38 @@ public class DbInitializer {
 
     @PostConstruct
     public void initDb() throws IOException, URISyntaxException {
-        System.out.println("Before init...");
-        try (var query = dslContext.selectCount().from(Tables.WORDS);
-             var lines = Files.lines(Path.of(this.getClass().getClassLoader().getResource(DICT_FILE_NAME).toURI()))) {
-            if (query.fetchOne(0, int.class) == 0) {
-                lines.filter(l -> !l.isBlank())
-                        .map(line -> line.split("\\s")[0])
-                        .filter(l -> !l.isBlank() && l.length() == 5 && !l.contains("'") && !l.contains("-"))
-                        .distinct()
-                        .map(word -> {
-                            WordsRecord record = dslContext.newRecord(Tables.WORDS);
-                            record.setWord(word);
-                            record.setLetters(word.split(""));
-                            record.setUniqueNumber((int) Arrays.stream(record.getLetters()).distinct().count());
-                            record.setRank(Arrays.stream(record.getLetters())
-                                    .map(l -> {
-                                        return LETTERS_RANK.get(l.toUpperCase());
-                                    })
-                                    .mapToDouble(rank -> rank)
-                                    .sum());
-                            return record;
-                        })
-                        .forEach(UpdatableRecordImpl::store);
+        try (var query = dslContext.selectCount().from(Tables.WORDS)) {
+            if (query.fetchOne(0, int.class) > 0) {
+                return;
             }
         }
+        System.out.println("Before init...");
+        List<String> lines = new ArrayList<>();
+        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(DICT_FILE_NAME)) {
+            InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(streamReader);
+            for (String line; (line = reader.readLine()) != null; ) {
+                lines.add(line);
+            }
+        }
+        lines.stream().filter(l -> !l.isBlank())
+                .map(line -> line.split("\\s")[0])
+                .filter(l -> !l.isBlank() && l.length() == 5 && !l.contains("'") && !l.contains("-"))
+                .distinct()
+                .map(word -> {
+                    WordsRecord record = dslContext.newRecord(Tables.WORDS);
+                    record.setWord(word);
+                    record.setLetters(word.split(""));
+                    record.setUniqueNumber((int) Arrays.stream(record.getLetters()).distinct().count());
+                    record.setRank(Arrays.stream(record.getLetters())
+                            .map(l -> {
+                                return LETTERS_RANK.get(l.toUpperCase());
+                            })
+                            .mapToDouble(rank -> rank)
+                            .sum());
+                    return record;
+                })
+                .forEach(UpdatableRecordImpl::store);
         System.out.println("Initialized!");
     }
 }
