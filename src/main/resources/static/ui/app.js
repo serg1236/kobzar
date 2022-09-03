@@ -59,16 +59,10 @@ function refreshUI() {
     });
 }
 
-function log(message) {
-    var val = $("#log").html();
-    $("#log").html(val + "</br>" + message);
-}
-
 $(function() {
     refreshUI();
     $(".letter-input").on('input', (event) => {
         var value = event.originalEvent.data;
-        log("triggered with val " + value);
         var target = event.target;
         var index =  $(target).attr("x-index");
         var positionedValue = { value: value, index: index}
@@ -76,25 +70,22 @@ $(function() {
             return item.index != index;
         });
         if(value != "" && value != null) {
-            log("before insert");
-            log(JSON.stringify(includeOnPosition));
+            value = value.toLowerCase();
             includeOnPosition.push({ value: value, index: index});
             includeWrongPosition = arrayRemove(includeWrongPosition, positionedValue);
             exclude = arrayRemove(exclude, value);
-            log("after insert");
-            log(JSON.stringify(includeOnPosition));
         }
 
         refreshUI();
     });
     $(".disposed-letter-input").on('input', (event) => {
         var target = event.target;
-        log("triggered");
         var index =  $(target).attr("x-index");
         includeWrongPosition = includeWrongPosition.filter(item => {
             return item.index != index;
         });
         $(target).val().split("").forEach(value => {
+            value = value.toLowerCase();
             var positionedValue = { value: value, index: index};
             if(value != "" && value != null) {
                 includeWrongPosition.push(positionedValue);
