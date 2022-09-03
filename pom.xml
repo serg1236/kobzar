@@ -81,9 +81,9 @@
                         <configuration>
                             <jdbc>
                                 <driver>org.postgresql.Driver</driver>
-                                <url>jdbc:postgresql://localhost:5432/kobzar</url>
-                                <user>kobzar</user>
-                                <password>kobzar</password>
+                                <url>${env.DB_URL}</url>
+                                <user>${env.DB_USERNAME}</user>
+                                <password>${env.DB_PASSWORD}</password>
                             </jdbc>
                             <generator>
                                 <target>
