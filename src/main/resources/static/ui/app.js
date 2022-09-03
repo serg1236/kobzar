@@ -59,11 +59,16 @@ function refreshUI() {
     });
 }
 
+function log(message) {
+    var val = $("#log").html();
+    $("#log").html(val + "</br>" + message);
+}
+
 $(function() {
     refreshUI();
     $(".letter-input").on('input', (event) => {
         var value = event.originalEvent.data;
-        alert("triggered with val " + value);
+        log("triggered with val " + value);
         var target = event.target;
         var index =  $(target).attr("x-index");
         var positionedValue = { value: value, index: index}
@@ -71,16 +76,20 @@ $(function() {
             return item.index != index;
         });
         if(value != "" && value != null) {
+            log("before insert");
+            log(JSON.stringify(includeOnPosition));
             includeOnPosition.push({ value: value, index: index});
             includeWrongPosition = arrayRemove(includeWrongPosition, positionedValue);
             exclude = arrayRemove(exclude, value);
+            log("after insert");
+            log(JSON.stringify(includeOnPosition));
         }
 
         refreshUI();
     });
     $(".disposed-letter-input").on('input', (event) => {
         var target = event.target;
-        alert("triggered");
+        log("triggered");
         var index =  $(target).attr("x-index");
         includeWrongPosition = includeWrongPosition.filter(item => {
             return item.index != index;
