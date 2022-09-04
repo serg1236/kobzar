@@ -3,7 +3,7 @@ const Keyboard = window.SimpleKeyboard.default;
 const myKeyboard = new Keyboard({
   onKeyPress: button => onKeyPress(button),
   layout:  { 'default': [
-              'й ц у к е н г ш щ з х',
+              'й ц у к е н г ґ ш щ з х',
               'ф і ї в а п р о л д ж є',
               'я ч с м и т ь б ю'
             ]}
