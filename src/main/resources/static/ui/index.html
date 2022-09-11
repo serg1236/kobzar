@@ -91,6 +91,20 @@
             font-size: 30px;
             color: white;
         }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+            color: white;
+            margin-top: auto;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
 
         @media only screen
         and (min-device-width: 320px)
@@ -128,6 +142,9 @@
             .clear-button {
                 right: 30px;
                 font-size: 60px;
+            }
+            footer {
+                font-size: 30px;
             }
         }
     </style>
@@ -169,6 +186,9 @@
         </div>
     </div>
 </div>
+<footer>
+    <p><a href="https://github.com/serg1236" target="_blank">Сергій Дахній.</a> 2022. Всі права захищено (напевно).</p>
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
 <script type="text/javascript" src="./app.js"></script>
 </body>
