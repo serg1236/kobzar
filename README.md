@@ -1,4 +1,4 @@
 # Кобзар
 Помічник для гри "Кобза" (https://kobzaapp.github.io)
 
-Працює за адресою http://kobzar.online/
+Працює за адресою https://kobzar.online/
