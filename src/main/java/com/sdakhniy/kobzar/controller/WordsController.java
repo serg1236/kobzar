@@ -24,12 +24,13 @@ public class WordsController {
     public WordsResponse getWords(
             @RequestParam List<String> exclude,
             @RequestParam List<String> includeOnPosition,
-            @RequestParam List<String> includeWrongPosition
+            @RequestParam List<String> includeWrongPosition,
+            @RequestParam Integer length
     ) {
         return new WordsResponse(
 
                 dao.getWords(toLowerCase(exclude), parseRequestParam(toLowerCase(includeWrongPosition)),
-                                parseRequestParam(toLowerCase(includeOnPosition))).stream()
+                                parseRequestParam(toLowerCase(includeOnPosition)), length).stream()
                         .map(WordsRecord::getWord).collect(Collectors.toList())
         );
     }

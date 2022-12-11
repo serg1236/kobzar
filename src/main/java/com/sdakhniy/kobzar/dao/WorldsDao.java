@@ -18,7 +18,7 @@ public class WorldsDao {
     @Autowired
     private DefaultCloseableDSLContext dslContext;
 
-    public List<WordsRecord> getWords(List<String> exclude, List<IndexedLetter> includeWrongPosition, List<IndexedLetter> includeOnPosition) {
+    public List<WordsRecord> getWords(List<String> exclude, List<IndexedLetter> includeWrongPosition, List<IndexedLetter> includeOnPosition, int lenght) {
         return dslContext.selectFrom(Tables.WORDS)
                 .where(
                         Tables.WORDS.LETTERS.contains(includeWrongPosition.stream().map(IndexedLetter::letter).toArray(String[]::new)),
@@ -30,7 +30,9 @@ public class WorldsDao {
                         DSL.and(
                                 includeWrongPosition.stream()
                                         .map(entry -> DSL.arrayGet(Tables.WORDS.LETTERS, entry.index()).ne(entry.letter()))
-                                        .toArray(Condition[]::new))).orderBy(Tables.WORDS.UNIQUE_NUMBER.desc(), Tables.WORDS.RANK.desc())
+                                        .toArray(Condition[]::new)),
+                        DSL.length(Tables.WORDS.WORD).eq(lenght)
+                ).orderBy(Tables.WORDS.UNIQUE_NUMBER.desc(), Tables.WORDS.RANK.desc())
                 .fetch().stream().toList();
     }
 }

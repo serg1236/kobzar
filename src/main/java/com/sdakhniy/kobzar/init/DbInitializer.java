@@ -79,7 +79,7 @@ public class DbInitializer {
         }
         lines.stream().filter(l -> !l.isBlank())
                 .map(line -> line.split("\\s")[0])
-                .filter(l -> !l.isBlank() && l.length() == 5 && !l.contains("'") && !l.contains("-"))
+                .filter(l -> !l.isBlank() && (l.length() == 5 || l.length() == 6) && !l.contains("'") && !l.contains("-"))
                 .distinct()
                 .map(word -> {
                     WordsRecord record = dslContext.newRecord(Tables.WORDS);
@@ -87,9 +87,7 @@ public class DbInitializer {
                     record.setLetters(word.split(""));
                     record.setUniqueNumber((int) Arrays.stream(record.getLetters()).distinct().count());
                     record.setRank(Arrays.stream(record.getLetters())
-                            .map(l -> {
-                                return LETTERS_RANK.get(l.toUpperCase());
-                            })
+                            .map(l -> LETTERS_RANK.get(l.toUpperCase()))
                             .mapToDouble(rank -> rank)
                             .sum());
                     return record;

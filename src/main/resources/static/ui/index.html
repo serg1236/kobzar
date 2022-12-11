@@ -81,7 +81,7 @@
             text-align: center;
             margin-bottom: 5px;
         }
-        .info-button.pressed {
+        .pressed {
             color: #cca300;
         }
         .clear-button {
@@ -104,6 +104,10 @@
             margin-top: auto;
             margin-bottom: 20px;
             font-size: 15px;
+        }
+
+        .removed {
+            display: none;
         }
 
         @media only screen
@@ -146,6 +150,9 @@
             footer {
                 font-size: 30px;
             }
+            .five-button,.six-button {
+                margin-left: 10px
+            }
         }
     </style>
 </head>
@@ -153,7 +160,11 @@
 <div>
     <div id="connect-container" class="app-container">
         <div class="row">
-            <h1 class="ui header app-header">КОБЗАР <i class="fa-regular fa-circle-question info-button"></i></h1>
+            <h1 class="ui header app-header">КОБЗАР
+                <i class="fa-regular fa-circle-question info-button"></i>
+                <i class="fa-solid fa-dice-five five-button pressed"></i>
+                <i class="fa-solid fa-dice-six six-button"></i>
+            </h1>
             <i class="fa-regular fa-rectangle-xmark clear-button"></i>
         </div>
         <div class="row info-text">
@@ -168,6 +179,7 @@
             <input type="text" class="letter-input" name="letter3" x-index="3" maxlength="1">
             <input type="text" class="letter-input" name="letter4" x-index="4" maxlength="1">
             <input type="text" class="letter-input" name="letter5" x-index="5" maxlength="1">
+            <input type="text" class="letter-input removed" name="letter6" x-index="6" maxlength="1">
         </div>
         <div class="row">
             <input type="text" class="disposed-letter-input" name="disposed-letter1" x-index="1" maxlength="5">
@@ -175,6 +187,7 @@
             <input type="text" class="disposed-letter-input" name="disposed-letter3" x-index="3" maxlength="5">
             <input type="text" class="disposed-letter-input" name="disposed-letter4" x-index="4" maxlength="5">
             <input type="text" class="disposed-letter-input" name="disposed-letter5" x-index="5" maxlength="5">
+            <input type="text" class="disposed-letter-input removed" name="disposed-letter6" x-index="6" maxlength="5">
         </div>
         <div class="row">
             <div class="simple-keyboard"></div>

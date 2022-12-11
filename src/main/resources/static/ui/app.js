@@ -12,6 +12,7 @@ const myKeyboard = new Keyboard({
 var exclude = [];
 var includeOnPosition = [];
 var includeWrongPosition = [];
+var length = 5;
 
 function onKeyPress(button) {
     if(exclude.indexOf(button) < 0) {
@@ -104,7 +105,8 @@ $(function() {
         var params = {
                         exclude: exclude.toString(),
                         includeOnPosition: iopParam,
-                        includeWrongPosition: iwpParam
+                        includeWrongPosition: iwpParam,
+                        length: length
                     };
         $.get("/words", params, function( response ) {
             $("#worlds-list").html("");
@@ -133,10 +135,30 @@ $(function() {
         }
     });
 
-    $(".clear-button").click(event => {
+    function clear() {
         includeOnPosition = [];
         includeWrongPosition = [];
         exclude = [];
         refreshUI();
+    }
+
+    $(".clear-button").click(event => {
+        clear();
+    })
+
+    $(".five-button").click(event => {
+        $(".five-button").addClass("pressed");
+        $(".six-button").removeClass("pressed");
+        $("[x-index=6]").addClass("removed");
+        length = 5;
+        clear();
+    })
+
+    $(".six-button").click(event => {
+        $(".six-button").addClass("pressed");
+        $(".five-button").removeClass("pressed");
+        $("[x-index=6]").removeClass("removed");
+        length = 6;
+        clear();
     })
 });
